@@ -46,9 +46,7 @@ function usd(aNumber) {
 
 function statement(invoice, plays) {
   let totalAmount = 0;
-  let volumeCredits = 0; //포인트
   let result = `청구 내역 (고객명 :${invoice.customer})\n`;
-
   for (let perf of invoice.performances) {
     result += `${playFor(perf).name} : ${usd(amountFor(perf))} (${
       perf.audience
@@ -56,6 +54,7 @@ function statement(invoice, plays) {
     totalAmount += amountFor(perf);
   }
 
+  let volumeCredits = 0; //포인트
   for (let perf of invoice.performances) {
     volumeCredits += volumeCreditsFor(perf);
   }
