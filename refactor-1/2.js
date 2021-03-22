@@ -1,10 +1,10 @@
 const plays = require('./data/plays.json');
 const invoices = require('./data/invoices.json');
 
-function amountFor(aPerformance, play) {
+function amountFor(aPerformance) {
   //값이 바뀌지 않는 변수는 매개변수로 전달
   let result = 0;
-  switch (play.type) {
+  switch (playFor(aPerformance).type) {
     case 'tragedy':
       result = 40000;
       if (aPerformance.audience > 30) {
@@ -20,7 +20,7 @@ function amountFor(aPerformance, play) {
       break;
 
     default:
-      throw new Error(`알수없는 장르 :${play.type}`);
+      throw new Error(`알수없는 장르 :${playFor(aPerformance).type}`);
   }
   return result; // 함수 안에서 값이 바뀌는 변수 반환
 }
@@ -40,7 +40,7 @@ function statement(invoice, plays) {
   }).format;
 
   for (let perf of invoice.performances) {
-    let thisAmount = amountFor(perf, playFor(perf));
+    let thisAmount = amountFor(perf);
 
     volumeCredits += Math.max(perf.audience - 30, 0);
     if ('comedy' === playFor(perf).type)
